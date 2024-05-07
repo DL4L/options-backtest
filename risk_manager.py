@@ -80,14 +80,13 @@ class SoftVolatilityRiskManager(RiskManager):
 class VolatilitySpreadRiskManager(RiskManager):
     NAME = "VolatilitySpreadRiskManager"
 
-    def __init__(self, ticker: str, window_days_1: int, window_days_2: int, threshold_mul: float = 1.0):
-        self.ticker = ticker # TODO hacky
+    def __init__(self, window_days_1: int, window_days_2: int, threshold_mul: float = 1.0):
         self.window_days_1 = window_days_1
         self.window_days_2 = window_days_2
         self.threshold_mul = threshold_mul
     
     def initialize(self, underlying_data: pd.DataFrame):
-        self.underlying_data = get_spread_data(self.window_days_1, self.window_days_2, self.ticker)
+        self.underlying_data = get_spread_data(self.window_days_1, self.window_days_2, underlying_data)
 
     def evaluate(self, current_date: datetime):
         row = self.underlying_data.loc[current_date]

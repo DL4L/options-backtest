@@ -141,10 +141,7 @@ def get_underlying_data(ticker:str):
     return data
 
 
-def get_spread_data(window_days_1: int, window_days_2: int, ticker: str):
-    tick = yf.Ticker(ticker)
-    data = tick.history(start="2018-01-01", end="2023-12-29")
-    data.index = data.index.tz_localize(None)
+def get_spread_data(window_days_1: int, window_days_2: int, data: pd.DataFrame):
 
     # Calculate daily logarithmic returns
     data['Log Returns'] = np.log(data['Close'] / data['Close'].shift(1))
